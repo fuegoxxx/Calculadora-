@@ -1,0 +1,35 @@
+<!<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Calculadora de Lotaje para Trading</title>
+</head>
+<body>
+  <h2>Calculadora de Lotaje para Trading</h2>
+  <label>Capital ($): <input type="number" id="capital" /></label><br/><br/>
+  <label>% Riesgo por operación: <input type="number" id="riesgo" /></label><br/><br/>
+  <label>Stop Loss (pips): <input type="number" id="stoploss" /></label><br/><br/>
+  <label>Valor Pips ($ por pip): <input type="number" id="valorpip" /></label><br/><br/>
+  <button onclick="calcularLotaje()">Calcular lotaje</button><br/><br/>
+  <div id="resultado"></div>
+
+  <script>
+    function calcularLotaje() {
+      const capital = parseFloat(document.getElementById('capital').value);
+      const riesgoPorc = parseFloat(document.getElementById('riesgo').value);
+      const stopLoss = parseFloat(document.getElementById('stoploss').value);
+      const valorPip = parseFloat(document.getElementById('valorpip').value);
+
+      if (isNaN(capital) || isNaN(riesgoPorc) || isNaN(stopLoss) || isNaN(valorPip) || stopLoss <= 0) {
+        document.getElementById('resultado').innerText = 'Por favor, completa todos los campos con valores válidos.';
+        return;
+      }
+
+      const riesgoTotal = capital * (riesgoPorc / 100);
+      const lotaje = riesgoTotal / (stopLoss * valorPip);
+
+      document.getElementById('resultado').innerText = `Tamaño de lote recomendado: ${lotaje.toFixed(2)} lotes.`;
+    }
+  </script>
+</body>
+</html>
